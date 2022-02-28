@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+const { S3Client } = require('@aws-sdk/client-s3');
 const { storageEndpoint } = require('../config');
 
 const initS3 = (apiKey, apiSecret) => {
@@ -6,7 +6,7 @@ const initS3 = (apiKey, apiSecret) => {
     throw new Error('Missing Fleek credentials.');
   }
 
-  const s3 = new AWS.S3({
+  return new S3Client({
     apiVersion: '2006-03-01',
     accessKeyId: apiKey,
     secretAccessKey: apiSecret,
@@ -14,8 +14,6 @@ const initS3 = (apiKey, apiSecret) => {
     region: 'us-east-1',
     s3ForcePathStyle: true,
   });
-
-  return s3;
 };
 
 module.exports = initS3;
